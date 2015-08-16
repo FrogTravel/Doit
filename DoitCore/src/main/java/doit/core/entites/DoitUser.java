@@ -27,19 +27,27 @@ public class DoitUser {
 
 
     /**
-     * TODO: encoding fix need there!
      * Установка основной информации о пользователе
      * @param password Пароль
      * @param name Имя
-     * @param e_mail E-mail
+     * @param eMail E-mail
      */
-    public DoitUser(String name, String password, String e_mail) {
+    public DoitUser(String name, String password, String eMail) {
         this.login = name;
         this.password = password;
-        this.email = e_mail;
+        this.email = eMail;
         this.projects = new ArrayList<>();
     }
-
+    /**
+     * Создание нового пользователя с первичными данными
+     * @param password Пароль
+     * @param login Логин
+     */
+    public DoitUser(String login, String password) {
+        this.login = login;
+        this.password = password;
+        this.projects = new ArrayList<>();
+    }
 
     public DoitUser() {
         this.projects = new ArrayList<>();
