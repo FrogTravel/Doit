@@ -31,8 +31,8 @@ public class MarshallerExample {
         secondProject.setDescription("This is description for second project");
         DoitTask firstTaskSP = new DoitTask("First task for second project");
         DoitTask secondTaskSP = new DoitTask("Second task for second project");
-        firstProject.addTask(firstTaskSP);
-        firstProject.addTask(secondTaskSP);
+        secondProject.addTask(firstTaskSP);
+        secondProject.addTask(secondTaskSP);
         
         firstTaskFP.setImpDeg((short)4);
         firstTaskFP.setDescription("This is description for first task");
@@ -51,9 +51,5 @@ public class MarshallerExample {
         JaxbParser parser = new JaxbParser();
         
         parser.saveObject(almaz);
-        parser.saveObject(firstTaskFP);
-        parser.saveObject(firstProject);
-        parser.saveObject(da);
-        
     }
 }
