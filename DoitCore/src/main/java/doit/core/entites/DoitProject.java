@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.xml.bind.annotation.XmlType;
 
 // REVIEW DATE: 11.08.2015
 // REVIEWER: ALMAZ
@@ -21,7 +22,8 @@ import java.util.List;
  * Наследуется от {@link DoitAbstractTask}
  * @author Anatoly
  */
-@XmlRootElement
+@XmlRootElement(name = "project")
+@XmlType(name = "", propOrder = {"projectTasks"})
 public class DoitProject extends DoitAbstractTask {
     /** 
      * Коллекция задач ({@link DoitTask})
@@ -29,7 +31,10 @@ public class DoitProject extends DoitAbstractTask {
      */
     protected List<DoitAbstractTask> projectTasks;
 
-
+    public DoitProject(){
+        super();
+    }
+    
     public DoitProject(String projectName) {
         this.name = projectName;
         this.projectTasks = new ArrayList<DoitAbstractTask>();
@@ -51,15 +56,6 @@ public class DoitProject extends DoitAbstractTask {
     }
 
 
-
-    /**
-     * Поле для хранения значения, которое отвечает за доступ к проекту
-     * false - создатель, true - группа пользователей
-     *
-     * TODO: O_o - что тут имелось ввиду?
-     */
-    private boolean owner;
-
     /**
      * Устанавливает поля {@link DoitProject#name} и {@link DoitProject#startDate}
      * @param projectName Short project name
@@ -68,20 +64,6 @@ public class DoitProject extends DoitAbstractTask {
     public DoitProject(String projectName, Date startDate) {
         this.name = projectName;
         this.startDate = startDate;
-
-        // TODO: O_o - что тут имелось ввиду?
-        this.owner = false;//по умолчанию доступ имеет только создатель проекта
-    }
-
-
-
-    /**
-     * Редактирование задачи, прикрепленной к проекту
-     * @param t 
-     * @see DoitTask
-     */
-    public void editTask(DoitTask t) {
-        t.editTask();
     }
     
     /**
@@ -89,8 +71,8 @@ public class DoitProject extends DoitAbstractTask {
      * @param t 
      * @see DoitTask
      */
-    public void deleteTask(DoitTask t){
-        
+    public void removeTask(DoitTask t){
+        this.projectTasks.remove(t);
     }
     
     /**
@@ -98,17 +80,21 @@ public class DoitProject extends DoitAbstractTask {
      * @param task
      * @see DoitTask
      */
-    @XmlElement
     public void addTask(DoitAbstractTask task){
         this.projectTasks.add(task);
+        
     }
 
     /**
      * @return list of all subtasks in project
      */
-    @XmlElementWrapper(name = "subtasks")
-    @XmlElement(name = "subtask")
+    @XmlElementWrapper(name = "projectTasks")
+    @XmlElement(name = "task")
     public List<DoitAbstractTask> getProjectTasks() {
         return projectTasks;
+    }
+    
+    public void setProjectTasks(List<DoitAbstractTask> tasks){
+        this.projectTasks = tasks;
     }
 }

@@ -7,15 +7,15 @@ import java.util.List;
 
 /**
  * TODO: Fix encoding bug, please
- * »нформаци¤ о пользователе
+ * Информация о пользователе
  * @author Anatoly
  */
 @XmlRootElement(name = "user")
 @XmlType(name="", propOrder={"firstName", "secondName", "email", "password", "projects"})
 public class DoitUser {
-    /** »м¤ */
+    /** Имя */
     private String login;
-    /** ѕароль */
+    /** Пароль */
     private String password;
     /** E-mail */
     private String email;
@@ -28,9 +28,9 @@ public class DoitUser {
 
     /**
      * TODO: encoding fix need there!
-     * ”становка основной информации о пользователе
-     * @param password ѕароль
-     * @param name »м¤
+     * Установка основной информации о пользователе
+     * @param password Пароль
+     * @param name Имя
      * @param e_mail E-mail
      */
     public DoitUser(String name, String password, String e_mail) {

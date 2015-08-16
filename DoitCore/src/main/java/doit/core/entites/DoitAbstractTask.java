@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
 
 
 // REVIEW DATE: 12.08.2015
@@ -21,6 +23,7 @@ import java.util.List;
  * @author Anatoly
  */
 @XmlRootElement
+@XmlType(propOrder = {"name", "description", "startDate", "finishDate", "attachmentList"})
 public abstract class DoitAbstractTask {
     /** Имя */
     protected String name;
@@ -34,37 +37,33 @@ public abstract class DoitAbstractTask {
     protected List<DoitAttachment> attachmentList;
 
     // TODO: Describe this function here, please
-    protected void addAttachment(DoitAttachment attachment){
+    public void addAttachment(DoitAttachment attachment){
         this.attachmentList.add(attachment);
     }
     // TODO: Describe this function here, please
-    protected void removeAttachment(DoitAttachment attachment){
+    public void removeAttachment(DoitAttachment attachment){
         this.attachmentList.remove(attachment);
     }
     // TODO: Describe this function here, please
-    protected List<DoitAttachment> getAttachments(){
+    public List<DoitAttachment> getAttachmentList(){
         return attachmentList;
     }
 
+    @XmlElementWrapper(name = "attachments")
+    @XmlElement(name = "attachment")
+    public void setAttachmentList(List<DoitAttachment> attachments){
+        attachmentList = attachments;
+    }
 
     protected DoitAbstractTask() {
         this.attachmentList = new ArrayList<DoitAttachment>();
     }
 
-    /**
-     * Редактирование
-     *
-     * TODO: O_o - и как собрался редактировать таску?
-     */
-    public void editTask(){
-        
-    }
     
     /**
      * Изменение имени
-     * final - для невозможности переопределния в дочерних классах
      * @param name Новое имя
-     *
+     * 
      * TODO: а если я null передам, то что будет?
      */
     @XmlElement
@@ -74,10 +73,7 @@ public abstract class DoitAbstractTask {
 
     /**
      * Получение имени
-     * final - для невозможности переопределния в дочерних классах
      * @return Имя
-     *
-     * TODO: О_о почему final ?
      */
     public String getName() {
         return this.name;
@@ -85,10 +81,7 @@ public abstract class DoitAbstractTask {
 
     /**
      * Возвращает описание
-     * final - для невозможности переопределния в дочерних классах
      * @return Описание
-     *
-     * TODO: О_о почему final ?
      */
     public String getDescription() {
         return this.description;
@@ -96,10 +89,8 @@ public abstract class DoitAbstractTask {
 
     /**
      * Позволяет именить описание ({@link DoitAbstractTask#description})
-     * final - для невозможности переопределния в дочерних классах
      * @param descr Новое описание
-     *
-     * TODO: О_о почему final ?
+     * 
      * TODO: а если я null передам, то что будет?
      */
     @XmlElement
@@ -109,9 +100,7 @@ public abstract class DoitAbstractTask {
 
     /**
      * Возвращает объект Date - дата начала
-     * final - для невозможности переопределния в дочерних классах
      * @return Дата начала
-     * TODO: О_о почему final ?
      */
     public Date getStartDate() {
         return this.startDate;
@@ -119,10 +108,7 @@ public abstract class DoitAbstractTask {
 
     /**
      * Возвращает объект Date - дата завершения
-     * final - для невозможности переопределния в дочерних классах
      * @return Дата завершения
-     *
-     * TODO: О_о почему final ?
      */
     public Date getFinishDate() {
         return this.finishDate;
@@ -131,10 +117,8 @@ public abstract class DoitAbstractTask {
 
     /**
      * Позволяет изменить дату завершения
-     * final - для невозможности переопределния в дочерних классах
      * @param finish Дата завершения
      *
-     * TODO: О_о почему final ?
      * TODO: а если я null передам, то что будет?
      */
     @XmlElement
@@ -142,5 +126,9 @@ public abstract class DoitAbstractTask {
         this.finishDate = finish;
     }
 
+    @XmlElement
+    public void setStartDate(Date start) {
+        this.startDate = start;
+    }
 
 }

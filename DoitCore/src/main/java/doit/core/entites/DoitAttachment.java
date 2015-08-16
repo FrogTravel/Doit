@@ -10,16 +10,21 @@ package doit.core.entites;
 
 
 import java.io.File;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Используется для хранения и работы с прикреплением типа File
  * @author Anatoly
  */
+@XmlRootElement(name = "attachment")
+@XmlType(propOrder = {"name", "file"})
 public class DoitAttachment extends File{
     /**
      * Ссылка на файл
      */
     private File file;
+    /** Имя */
     private String name;
 
     /**
@@ -33,8 +38,12 @@ public class DoitAttachment extends File{
         this.name = name;
         this.file = file;
     }
+    
+    public DoitAttachment(){
+        super("");
+    }
 
-
+    
     public File getFile() {
         return file;
     }
