@@ -46,6 +46,15 @@ public class DoitTask extends DoitAbstractTask {
     }
 
     /**
+     * TODO: Создайте enum - не извращайтесь плиз с этим шортом
+     *
+     * enum TASK_PRIORITY{
+     *     PRIORITY_1, [замените на нормальное название]
+     *     PRIORITY_2, [замените на нормальное название]
+     *     PRIORITY_3, [замените на нормальное название]
+     *     etc...
+     * }
+     *
      * Изменение степени важности задачи
      * @param imDeg 
      */
