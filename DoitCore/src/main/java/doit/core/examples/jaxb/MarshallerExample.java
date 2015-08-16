@@ -45,8 +45,8 @@ public class MarshallerExample {
         
         firstTaskFP.addAttachment(da);
 
-        almaz.addTask(firstProject);
-        almaz.addTask(secondProject);
+        almaz.getProjects().add(firstProject);
+        almaz.getProjects().add(secondProject);
 
         JaxbParser parser = new JaxbParser();
         

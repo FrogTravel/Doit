@@ -23,7 +23,7 @@ public class DoitUser {
     private String firstName;
     private String secondName;
 
-    private List<DoitAbstractTask> projects;
+    private List<DoitProject> projects;
 
 
     /**
@@ -37,26 +37,22 @@ public class DoitUser {
         this.login = name;
         this.password = password;
         this.email = e_mail;
-        this.projects = new ArrayList<DoitAbstractTask>();
+        this.projects = new ArrayList<>();
     }
 
 
     public DoitUser() {
-        this.projects = new ArrayList<DoitAbstractTask>();
+        this.projects = new ArrayList<>();
     }
 
     public DoitUser(String login) {
         this.login = login;
-        this.projects = new ArrayList<DoitAbstractTask>();
+        this.projects = new ArrayList<>();
     }
 
-    public void addTask(DoitAbstractTask task){
-        this.projects.add(task);
-    }
-    public List<DoitAbstractTask> getProjects() {
+    public List<DoitProject> getProjects() {
         return projects;
     }
-
 
     public String getLogin() {
         return login;
@@ -101,7 +97,7 @@ public class DoitUser {
 
     @XmlElementWrapper(name = "projects")
     @XmlElement(name = "project")
-    public void setProjects(List<DoitAbstractTask> projects) {
+    public void setProjects(List<DoitProject> projects) {
         this.projects = projects;
     }
 
