@@ -49,7 +49,9 @@ public class MarshallerExample {
         almaz.getProjects().add(secondProject);
 
         JaxbParser parser = new JaxbParser();
+        File file = new File("user.xml");
         
-        parser.saveObject(almaz);
+        parser.saveObject(file, almaz);
+        DoitUser newUser = (DoitUser) parser.getObject(file, DoitUser.class);
     }
 }
