@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author Anatoly
  */
 @XmlRootElement(name = "task")
-@XmlType(name = "", propOrder = {"impDeg", "complete"})
+@XmlType(name = "", propOrder = {"name", "description", "startDate", "finishDate", "attachmentList", "impDeg", "complete"})
 public class DoitTask extends DoitAbstractTask {
     /** Степень важности задачи */
     private short impDeg;

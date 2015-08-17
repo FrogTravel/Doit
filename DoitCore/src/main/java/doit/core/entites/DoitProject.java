@@ -23,13 +23,13 @@ import javax.xml.bind.annotation.XmlType;
  * @author Anatoly
  */
 @XmlRootElement(name = "project")
-@XmlType(name = "", propOrder = {"projectTasks"})
+@XmlType(name = "", propOrder = {"name", "description", "startDate", "finishDate", "attachmentList", "projectTasks"})
 public class DoitProject extends DoitAbstractTask {
     /** 
      * Коллекция задач ({@link DoitTask})
      * @see DoitTask
      */
-    protected List<DoitAbstractTask> projectTasks;
+    protected List<DoitTask> projectTasks;
 
     public DoitProject(){
         super();
@@ -37,14 +37,14 @@ public class DoitProject extends DoitAbstractTask {
     
     public DoitProject(String projectName) {
         this.name = projectName;
-        this.projectTasks = new ArrayList<DoitAbstractTask>();
+        this.projectTasks = new ArrayList<DoitTask>();
     }
 
     public DoitProject(String projectName, String description, Date startDate) {
         this.name = projectName;
         this.description = description;
         this.startDate = startDate;
-        this.projectTasks = new ArrayList<DoitAbstractTask>();
+        this.projectTasks = new ArrayList<DoitTask>();
     }
 
     public DoitProject(String projectName, String description, Date startDate, Date finishDate) {
@@ -52,7 +52,7 @@ public class DoitProject extends DoitAbstractTask {
         this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;
-        this.projectTasks = new ArrayList<DoitAbstractTask>();
+        this.projectTasks = new ArrayList<DoitTask>();
     }
 
 
@@ -80,7 +80,7 @@ public class DoitProject extends DoitAbstractTask {
      * @param task
      * @see DoitTask
      */
-    public void addTask(DoitAbstractTask task){
+    public void addTask(DoitTask task){
         this.projectTasks.add(task);
         
     }
@@ -90,11 +90,11 @@ public class DoitProject extends DoitAbstractTask {
      */
     @XmlElementWrapper(name = "projectTasks")
     @XmlElement(name = "task")
-    public List<DoitAbstractTask> getProjectTasks() {
+    public List<DoitTask> getProjectTasks() {
         return projectTasks;
     }
     
-    public void setProjectTasks(List<DoitAbstractTask> tasks){
+    public void setProjectTasks(List<DoitTask> tasks){
         this.projectTasks = tasks;
     }
 }
