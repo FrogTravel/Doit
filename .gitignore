@@ -17,6 +17,7 @@ hs_err_pid*
 *.iml
 .target/
 
+
 ## Directory-based project format:
 .idea/
 # if you remove the above rule, at least ignore the following:
@@ -55,3 +56,4 @@ hs_err_pid*
 # JIRA plugin
 atlassian-ide-plugin.xml
 /DoitCore/target/
+/DoitUI/target/

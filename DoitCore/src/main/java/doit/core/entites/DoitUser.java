@@ -23,40 +23,44 @@ public class DoitUser {
     private String firstName;
     private String secondName;
 
-    private List<DoitAbstractTask> projects;
+    private List<DoitProject> projects;
 
 
     /**
-     * TODO: encoding fix need there!
      * Установка основной информации о пользователе
      * @param password Пароль
      * @param name Имя
-     * @param e_mail E-mail
+     * @param eMail E-mail
      */
-    public DoitUser(String name, String password, String e_mail) {
+    public DoitUser(String name, String password, String eMail) {
         this.login = name;
         this.password = password;
-        this.email = e_mail;
-        this.projects = new ArrayList<DoitAbstractTask>();
+        this.email = eMail;
+        this.projects = new ArrayList<>();
+    }
+    /**
+     * Создание нового пользователя с первичными данными
+     * @param password Пароль
+     * @param login Логин
+     */
+    public DoitUser(String login, String password) {
+        this.login = login;
+        this.password = password;
+        this.projects = new ArrayList<>();
     }
 
-
     public DoitUser() {
-        this.projects = new ArrayList<DoitAbstractTask>();
+        this.projects = new ArrayList<>();
     }
 
     public DoitUser(String login) {
         this.login = login;
-        this.projects = new ArrayList<DoitAbstractTask>();
+        this.projects = new ArrayList<>();
     }
 
-    public void addTask(DoitAbstractTask task){
-        this.projects.add(task);
-    }
-    public List<DoitAbstractTask> getProjects() {
+    public List<DoitProject> getProjects() {
         return projects;
     }
-
 
     public String getLogin() {
         return login;
@@ -101,7 +105,7 @@ public class DoitUser {
 
     @XmlElementWrapper(name = "projects")
     @XmlElement(name = "project")
-    public void setProjects(List<DoitAbstractTask> projects) {
+    public void setProjects(List<DoitProject> projects) {
         this.projects = projects;
     }
 
