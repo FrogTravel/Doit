@@ -2,6 +2,8 @@ package doit.core.utils;
 
 import doit.core.entites.DoitProject;
 import doit.core.entites.DoitUser;
+import doit.core.examples.jaxb.JaxbParser;
+import doit.core.examples.jaxb.UsersList;
 import doit.core.exceptions.DoitAuthorizationException;
 import doit.core.exceptions.DoitException;
 
@@ -12,14 +14,17 @@ import java.util.List;
  * Created by Almaz on 16.08.2015.
  */
 public class DoitContext {
-    private List<DoitUser> users;
+    private UsersList users;
 
     private DoitContext(){
-        this.users = new ArrayList<DoitUser>();
+        this.users = new UsersList();
 
-        this.users.add(new DoitUser("demo", "1234"));
-        this.users.add(new DoitUser("super", "4321"));
-        this.users.add(new DoitUser("hacker", "hacker"));
+        this.users.getUserList().add(new DoitUser("demo", "1234"));
+        this.users.getUserList().add(new DoitUser("super", "4321"));
+        this.users.getUserList().add(new DoitUser("hacker", "hacker"));
+        
+        JaxbParser.saveObject("users.xml", users);
+        JaxbParser.getObject("users.xml", UsersList.class);
     }
 
     private static class DoitContextHandler{
@@ -32,7 +37,7 @@ public class DoitContext {
 
     /***
      * TODO:
-     *  В будущем это все замениться на обращение к базе
+     *  В будущем это все заменится на обращение к базе
      *  или к другому источнику данных.
      *
      *  Сейчас это подпертый-костыль, поскольку база еще не готова
@@ -50,7 +55,7 @@ public class DoitContext {
         throw new DoitAuthorizationException("Authorization failed. Invalid login or password");
     }
     private DoitUser authorizeNoThrow(String login, String password){
-        for (DoitUser user: users)
+        for (DoitUser user: users.getUserList())
             if(user.getLogin().equals(login) &&
                     user.getPassword().equals(password))
                 return user;
@@ -65,7 +70,7 @@ public class DoitContext {
      */
     @Deprecated
     public DoitUser register(String userName, String pass) throws DoitException{
-        this.users.add(new DoitUser(userName, pass));
+        this.users.getUserList().add(new DoitUser(userName, pass));
         return authorize(userName, pass);
     }
 
