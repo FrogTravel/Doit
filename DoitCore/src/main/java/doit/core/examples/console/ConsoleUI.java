@@ -1,6 +1,7 @@
 package doit.core.examples.console;
 
 import doit.core.entites.DoitProject;
+import doit.core.entites.DoitTask;
 import doit.core.entites.DoitUser;
 import doit.core.exceptions.DoitAuthorizationException;
 import doit.core.exceptions.DoitException;
@@ -34,13 +35,78 @@ public class ConsoleUI {
                 case AUTHORIZE: authorize(); break;
                 case ADD_PROJECT: addProject(); break;
                 case DELETE_PROJECT: removeProject(); break;
-                /*
+                case SHOW_PROJECTS: printProjects(); break;
+                case SHOW_PROJECT_TASKS: printTasks(); break;
                 case ADD_TASK: addTask(); break;
                 case REMOVE_TASK:removeTask(); break;
-                case LOAD_ALL:loadAll(); break; */
+                case SHOW_TASK: showTask(); break;
+                case LOAD_ALL:loadAll(); break;
                 case SAVE_ALL:saveAll(); break;
                 default: printMessage("Operation not suppoted yet");
             }
+        }
+    }
+    
+    private static void showTask(){
+        if (currentUser != null){
+            if (!currentUser.getProjects().isEmpty()){
+                String projectName = getAnswer("Please, enter the project name for show task");
+                String taskName = getAnswer("Please, enter the task name");
+                
+                try {
+                    DoitTask task = context.getTask(currentUser, context.getProject(currentUser, projectName), taskName);
+                    if (task != null){
+                        System.out.println("Name: " + taskName);
+                        System.out.println("Description: " + task.getDescription());
+                    }
+                    else System.out.println("Task does not exists");
+                } catch (DoitException e) {
+                    System.out.println(e);
+                }
+                
+            } else {
+                System.out.println("Nothing to show. You don't have projects");
+            }
+        } else {
+            System.err.println("Authorize firstly, please");
+        }
+    }
+    
+    private static void removeTask(){
+        if (currentUser != null){
+            if (!currentUser.getProjects().isEmpty()){
+                String projectName = getAnswer("Please, enter the project name for remove task");
+                String taskName = getAnswer("Please, enter the task name");
+                
+                try {
+                    context.removeTask(currentUser, projectName, taskName);
+                } catch (DoitException e) {
+                    System.out.println(e);
+                }
+            } else {
+                System.out.println("Nothing to remove. You don't have projects");
+            }
+        } else {
+            System.err.println("Authorize firstly, please");
+        }
+    }
+    
+    private static void addTask(){
+        if (currentUser != null){
+            if (!currentUser.getProjects().isEmpty()){
+                String projectName = getAnswer("Please, enter the project name for add task");
+                String taskName = getAnswer("Please, enter the task name");
+                
+                try {
+                    context.createTask(currentUser, projectName, taskName);
+                } catch (DoitException e) {
+                    System.out.println(e);
+                }
+            } else {
+                System.out.println("You don't have projects. Add projects firstly, please");
+            }
+        } else {
+            System.err.println("Authorize firstly, please");
         }
     }
 
@@ -95,14 +161,27 @@ public class ConsoleUI {
 
         try{
             DoitUser user = context.register(login, pass);
-            authorize(login, pass);
+            if (user != null)
+                authorize(login, pass);
         } catch (DoitException e){
-            System.out.println("Oooops, something wrong happened");
+            System.out.println(e);
         }
     }
+    
     private static void saveAll(){
-        printMessage("Operation not suppoted yet");
+        context.saveAll();
     }
+    
+    private static void loadAll(){
+        try{
+            context.loadAll();
+        } catch (DoitException e) {
+            System.out.println(e);
+            if (getBooleanAnswer("Create new file? "))
+                saveAll();
+        }
+    }
+    
     private static void exit() {
         boolean saveChanges = getBooleanAnswer("Save changes? ");
 
@@ -124,11 +203,38 @@ public class ConsoleUI {
     private static void printProjects(){
         if(currentUser != null){
             System.out.println("Projects: ");
-            for (DoitProject pr: currentUser.getProjects()){
+            for (DoitProject pr : currentUser.getProjects()){
                 System.out.println(" " + pr.getName());
             }
+        } else {
+            System.out.println("Authorize firstly, please");
         }
     }
+    
+    private static void printTasks(){
+        if(currentUser != null){
+            if (!currentUser.getProjects().isEmpty()){
+                String projectName = getAnswer("Please, enter the project name for show tasks");
+                try{
+                    DoitProject project = context.getProject(currentUser, projectName);
+                    if (project != null){
+                        for (DoitTask task : project.getProjectTasks()){
+                            System.out.println("Tasks: ");
+                            System.out.println(" " + task.getName());
+                        }
+                    } else System.out.println("Project does not exists");
+                } catch(DoitException e){
+                    System.out.println(e);
+                }
+                
+            } else {
+                System.out.println("You don't have projects. Add projects firstly, please");
+            }
+        } else {
+            System.out.println("Authorize firstly, please");
+        }
+    }
+    
     private static void printHelloMessage() {
         System.out.println("Hi, stranger!");
         System.out.println("What do you want?");

@@ -14,10 +14,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- *
- * @author dev
+ * Временный класс, для сохранения в xml
+ * @author Anatoly
  */
-@XmlRootElement(name = "users")
+@XmlRootElement(name = "UserList")
 @XmlType(name = "", propOrder = {"userList"})
 public class UsersList {
     private List<DoitUser> userList;

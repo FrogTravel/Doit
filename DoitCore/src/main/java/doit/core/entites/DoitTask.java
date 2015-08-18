@@ -2,7 +2,6 @@ package doit.core.entites;
 
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -37,8 +36,8 @@ public class DoitTask extends DoitAbstractTask {
         this.name = name;
         this.startDate = start;
     }
-    public DoitTask(String description) {
-        this.name = description;
+    public DoitTask(String name) {
+        this.name = name;
     }
     
     public DoitTask(){
@@ -65,7 +64,6 @@ public class DoitTask extends DoitAbstractTask {
 
     /**
      * Возвращает степень важности задачи
-     * @param imDeg
      * @return Целое число - степень важности
      */
     public short getImpDeg() {

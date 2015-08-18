@@ -11,8 +11,11 @@ public enum Command {
     AUTHORIZE("authorize"),
     ADD_PROJECT("create project"),
     DELETE_PROJECT("delete project"),
+    SHOW_PROJECTS("show projects"),
+    SHOW_PROJECT_TASKS("show project tasks"),
     ADD_TASK("add task"),
     REMOVE_TASK("remove task"),
+    SHOW_TASK("show task"),
     SAVE_ALL("save all"),
     LOAD_ALL("load all"),
     EXIT("exit");
