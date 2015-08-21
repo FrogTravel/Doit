@@ -6,6 +6,7 @@ import doit.core.entites.DoitUser;
 import doit.core.exceptions.DoitAuthorizationException;
 import doit.core.exceptions.DoitException;
 import doit.core.utils.DoitContext;
+import java.io.FileNotFoundException;
 
 import java.util.Scanner;
 
@@ -47,19 +48,32 @@ public class ConsoleUI {
         }
     }
     
+    private static void showTasks(DoitProject project){
+        System.out.println("Project tasks: ");
+        for (DoitTask task : project.getProjectTasks()){
+            System.out.println(" " + task.getName());
+        }
+    }
+    
     private static void showTask(){
         if (currentUser != null){
             if (!currentUser.getProjects().isEmpty()){
                 String projectName = getAnswer("Please, enter the project name for show task");
-                String taskName = getAnswer("Please, enter the task name");
-                
                 try {
-                    DoitTask task = context.getTask(currentUser, context.getProject(currentUser, projectName), taskName);
-                    if (task != null){
-                        System.out.println("Name: " + taskName);
-                        System.out.println("Description: " + task.getDescription());
-                    }
-                    else System.out.println("Task does not exists");
+                    DoitProject project = context.getProject(currentUser, projectName);
+                    if (project != null){
+                        if (!project.getProjectTasks().isEmpty()){
+                            showTasks(project);
+                            String taskName = getAnswer("Please, enter the task name");
+                            DoitTask task = context.getTask(currentUser, project, taskName);
+                            if (task != null){
+                                System.out.println("Name: " + taskName);
+                                System.out.println("Description: " + task.getDescription());
+                            }
+                            else System.out.println("Task does not exists");
+                        } else System.out.println("Nothin to show. You don't have tasks");
+                    } else System.out.println("Project does not exists");
+                    
                 } catch (DoitException e) {
                     System.out.println(e);
                 }
@@ -76,10 +90,20 @@ public class ConsoleUI {
         if (currentUser != null){
             if (!currentUser.getProjects().isEmpty()){
                 String projectName = getAnswer("Please, enter the project name for remove task");
-                String taskName = getAnswer("Please, enter the task name");
-                
                 try {
-                    context.removeTask(currentUser, projectName, taskName);
+                    DoitProject project = context.getProject(currentUser, projectName);
+                    if (project != null){
+                        if (!project.getProjectTasks().isEmpty()){
+                            showTasks(project);
+                            String taskName = getAnswer("Please, enter the task name");
+                            DoitTask task = context.getTask(currentUser, project, taskName);
+                            if (task != null){
+                                project.removeTask(task);
+                                System.out.println("Task successfully removed");
+                                showTasks(project);
+                            } else System.out.println("Task does not exists");
+                        } else System.out.println("Nothin to remove. You don't have tasks");
+                    } else System.out.println("Project does not exists");
                 } catch (DoitException e) {
                     System.out.println(e);
                 }
@@ -92,18 +116,20 @@ public class ConsoleUI {
     }
     
     private static void addTask(){
-        if (currentUser != null){
+         if (currentUser != null){
             if (!currentUser.getProjects().isEmpty()){
-                String projectName = getAnswer("Please, enter the project name for add task");
-                String taskName = getAnswer("Please, enter the task name");
-                
+                String projectName = getAnswer("Please, enter the project name for remove task");
                 try {
-                    context.createTask(currentUser, projectName, taskName);
+                    DoitProject project = context.getProject(currentUser, projectName);
+                    if (project != null){
+                        context.createTask(currentUser, project, getAnswer("Please, enter the task name"));
+                        showTasks(project);
+                    } else System.out.println("Project does not exists");
                 } catch (DoitException e) {
                     System.out.println(e);
                 }
             } else {
-                System.out.println("You don't have projects. Add projects firstly, please");
+                System.out.println("You don't have projects. Add project first");
             }
         } else {
             System.err.println("Authorize firstly, please");
@@ -170,15 +196,17 @@ public class ConsoleUI {
     
     private static void saveAll(){
         context.saveAll();
+        System.out.println("Successfully saved");
     }
     
     private static void loadAll(){
         try{
             context.loadAll();
-        } catch (DoitException e) {
+            System.out.println("Successfully loaded");
+        } catch (FileNotFoundException e) {
             System.out.println(e);
-            if (getBooleanAnswer("Create new file? "))
-                saveAll();
+            saveAll();
+            System.out.println("Created new file");
         }
     }
     
@@ -218,10 +246,7 @@ public class ConsoleUI {
                 try{
                     DoitProject project = context.getProject(currentUser, projectName);
                     if (project != null){
-                        for (DoitTask task : project.getProjectTasks()){
-                            System.out.println("Tasks: ");
-                            System.out.println(" " + task.getName());
-                        }
+                        showTasks(project);
                     } else System.out.println("Project does not exists");
                 } catch(DoitException e){
                     System.out.println(e);
