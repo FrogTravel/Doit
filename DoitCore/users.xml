@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <UserList>
     <users>
-        <user login="login">
+        <user login="user">
             <password>pass</password>
-            <projects/>
+            <projects>
+                <project>
+                    <name>1</name>
+                    <attachments/>
+                    <projectTasks/>
+                </project>
+            </projects>
         </user>
     </users>
 </UserList>

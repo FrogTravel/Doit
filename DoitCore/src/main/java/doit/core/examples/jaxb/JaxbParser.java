@@ -1,7 +1,7 @@
 package doit.core.examples.jaxb;
 
-import doit.core.exceptions.DoitException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -26,7 +26,7 @@ public class JaxbParser {
         }
     }
     
-    public static Object getObject(String fileString, Class c) throws DoitException{
+    public static Object getObject(String fileString, Class c) throws FileNotFoundException{
         Object object = null;
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(c);
@@ -36,7 +36,7 @@ public class JaxbParser {
             if (file.exists()){
                 object = jaxbUnmarshaller.unmarshal(file);
             } else {
-                throw new DoitException("File not found");
+                throw new FileNotFoundException("File not found");
             }
         } catch (JAXBException e){
             System.out.println("Oooooooops! Something happen wrong :-(");

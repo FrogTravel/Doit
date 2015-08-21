@@ -7,7 +7,7 @@ import doit.core.examples.jaxb.JaxbParser;
 import doit.core.examples.jaxb.UsersList;
 import doit.core.exceptions.DoitAuthorizationException;
 import doit.core.exceptions.DoitException;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 
 /**
  * Created by Almaz on 16.08.2015.
@@ -133,11 +133,10 @@ public class DoitContext {
         throw new DoitException("User is not authorized!");
     }
     
-    public DoitTask createTask(DoitUser user, String projectName, String taskName) throws DoitException{
+    public DoitTask createTask(DoitUser user, DoitProject project, String taskName) throws DoitException{
         DoitUser actualUser = authorizeNoThrow(user.getLogin(), user.getPassword());
 
         if(actualUser != null){
-            DoitProject project = getProject(actualUser, projectName);
             if (project != null){
                 if (getTask(actualUser, project, taskName) == null){
                     DoitTask task = new DoitTask(taskName);
@@ -173,7 +172,7 @@ public class DoitContext {
         JaxbParser.saveObject("users.xml", users);
     }
     
-    public void loadAll() throws DoitException{
+    public void loadAll() throws FileNotFoundException{
         users = (UsersList) JaxbParser.getObject("users.xml", UsersList.class);
     }
 }
