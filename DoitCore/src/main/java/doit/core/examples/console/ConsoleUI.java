@@ -205,8 +205,8 @@ public class ConsoleUI {
             System.out.println("Successfully loaded");
         } catch (FileNotFoundException e) {
             System.out.println(e);
-            if (getBooleanAnswer("Create new file? "))
-                saveAll();
+            saveAll();
+            System.out.println("Created new file");
         }
     }
     

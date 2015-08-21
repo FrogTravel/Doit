@@ -17,6 +17,14 @@ public class DoitContext {
 
     private DoitContext(){
         this.users = new UsersList();
+        
+        try {
+            this.loadAll();
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+            System.out.println("Created new file");
+            this.saveAll();
+        }
     }
 
     private static class DoitContextHandler{
