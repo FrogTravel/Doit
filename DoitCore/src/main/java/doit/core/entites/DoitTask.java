@@ -14,15 +14,35 @@ import javax.xml.bind.annotation.XmlType;
  * @author Anatoly
  */
 @XmlRootElement(name = "task")
-@XmlType(name = "", propOrder = {"name", "description", "startDate", "finishDate", "attachmentList", "impDeg", "complete"})
+@XmlType(name = "", propOrder = {"name", "description", "startDate", "finishDate", "attachmentList"})
 public class DoitTask extends DoitAbstractTask {
     /** Степень важности задачи */
-    private short impDeg;
+    @XmlAttribute(name = "priority")
+    private DoitTaskPriority priority;
     /** Статус завершения задачи */
-    private boolean complete = false;
+    @XmlAttribute(name = "status")
+    private DoitTaskStatus status;
 
+    /***
+     * Инициализация полей {@link DoitTask#name}, {@link DoitTask#startDate},
+     *              {@link DoitAttachment}  {@link DoitTaskPriority} {@link DoitTaskStatus}
+     *
+     * @param name Имя
+     * @param start Дата начала
+     * @param attachment Прикрепление
+     * @param priority Task priority
+     * @param status Current task status
+     */
+    public DoitTask(String name, Date start, DoitAttachment attachment,
+                    DoitTaskPriority priority, DoitTaskStatus status) {
+        this.name = name;
+        this.startDate = start;
+        this.attachmentList.add(attachment);
+        this.priority = priority;
+        this.status = status;
+    }
     /**
-     * Инициализация полей {@link DoitTask#name}, {@link DoitTask#startDate}, {@link DoitTask#attachment}
+     * Инициализация полей {@link DoitTask#name}, {@link DoitTask#startDate}, {@link DoitAttachment}
      * @param name Имя
      * @param start Дата начала
      * @param attachment Прикрепление
@@ -32,66 +52,43 @@ public class DoitTask extends DoitAbstractTask {
         this.startDate = start;
         this.attachmentList.add(attachment);
     }
+    /**
+     * Инициализация полей {@link DoitTask#name}, {@link DoitTask#startDate}
+     * @param name Имя
+     * @param start Дата начала
+     */
     public DoitTask(String name, Date start) {
         this.name = name;
         this.startDate = start;
     }
+    /**
+     * Инициализация полей {@link DoitTask#name}
+     * @param name Имя
+     */
     public DoitTask(String name) {
         this.name = name;
     }
-    
-    public DoitTask(){
-        super();
+
+    public DoitTask() {
     }
 
     /**
-     * TODO: Создайте enum - не извращайтесь плиз с этим шортом
-     *
-     * enum TASK_PRIORITY{
-     *     PRIORITY_1, [замените на нормальное название]
-     *     PRIORITY_2, [замените на нормальное название]
-     *     PRIORITY_3, [замените на нормальное название]
-     *     etc...
-     * }
-     *
      * Изменение степени важности задачи
-     * @param imDeg 
+     * @param  priority
      */
-    @XmlAttribute(name = "impDeg")
-    public void setImpDeg(short imDeg) {
-        this.impDeg = imDeg;
+    public void setPriority(DoitTaskPriority priority) {
+        this.priority = priority;
     }
 
-    /**
-     * Возвращает степень важности задачи
-     * @return Целое число - степень важности
-     */
-    public short getImpDeg() {
-        return this.impDeg;
+    public DoitTaskPriority getPriority() {
+        return priority;
     }
 
-    /**
-     * Статус завершения задачи
-     * @return false - не завершена, true - завершена
-     */
-    public boolean isComplete() {
-        return this.complete;
-    }
-    
-    @XmlAttribute(name = "complete")
-    public void setComplete(boolean b){
-        this.complete = b;
-    }
-    
-    public boolean getComplete(){
-        return this.complete;
+    public DoitTaskStatus getStatus() {
+        return status;
     }
 
-    /**
-     * Изменение статуса завершения задачи
-     */
-    public void switchComplete() {
-        this.complete = !this.complete;
+    public void setStatus(DoitTaskStatus status) {
+        this.status = status;
     }
-    
 }
