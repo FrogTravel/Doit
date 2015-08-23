@@ -45,6 +45,9 @@ hs_err_pid*
 *.ipr
 *.iws
 
+## H2 DB files:
+*.db
+
 ## Plugin-specific files:
 
 # IntelliJ
