@@ -6,18 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO: Fix encoding bug, please
- * Информация о пользователе
  * @author Anatoly
  */
 @XmlRootElement(name = "user")
 @XmlType(name="", propOrder={"firstName", "secondName", "email", "password", "projects"})
 public class DoitUser {
-    /** Имя */
+
+
+    private Integer userId;
     private String login;
-    /** Пароль */
     private String password;
-    /** E-mail */
     private String email;
 
     private String firstName;
@@ -25,27 +23,29 @@ public class DoitUser {
 
     private List<DoitProject> projects;
 
+    public DoitUser(Integer userId) {
+        this.userId = userId;
+    }
 
-    /**
-     * Установка основной информации о пользователе
-     * @param password Пароль
-     * @param name Имя
-     * @param eMail E-mail
-     */
-    public DoitUser(String name, String password, String eMail) {
-        this.login = name;
+    public DoitUser(String login, String password, String eMail) {
+        this.login = login;
         this.password = password;
         this.email = eMail;
         this.projects = new ArrayList<>();
     }
-    /**
-     * Создание нового пользователя с первичными данными
-     * @param password Пароль
-     * @param login Логин
-     */
+
     public DoitUser(String login, String password) {
         this.login = login;
         this.password = password;
+        this.projects = new ArrayList<>();
+    }
+
+    public DoitUser(String login, String password, String email, String firstName, String secondName) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.projects = new ArrayList<>();
     }
 
@@ -109,4 +109,7 @@ public class DoitUser {
         this.projects = projects;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
 }

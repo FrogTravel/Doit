@@ -35,18 +35,7 @@ public class DoitContext {
         return DoitContextHandler.DOIT_CONTEXT;
     }
 
-    /***
-     * TODO:
-     *  В будущем это все заменится на обращение к базе
-     *  или к другому источнику данных.
-     *
-     *  Сейчас это подпертый-костыль, поскольку база еще не готова
-     *
-     * @param login
-     * @param pass
-     * @return
-     * @throws doit.core.exceptions.DoitAuthorizationException
-     */
+
     @Deprecated
     public DoitUser authorize(String login, String pass)throws DoitAuthorizationException{
         DoitUser user = authorizeNoThrow(login, pass);
@@ -63,15 +52,7 @@ public class DoitContext {
                 return user;
         return null;
     }
-    
-    /***
-     * TODO:
-     *      Подперый костыль :-(
-     * @param userName
-     * @param pass
-     * @return
-     * @throws doit.core.exceptions.DoitException
-     */
+
     @Deprecated
     public DoitUser register(String userName, String pass) throws DoitException{
         for (DoitUser user: users.getUserList())
@@ -81,13 +62,7 @@ public class DoitContext {
         return authorize(userName, pass);
     }
 
-    /***
-     * TODO: Исправить костыль :-)
-     * @param user
-     * @param projectName
-     * @return
-     * @throws DoitException
-     */
+
     @Deprecated
     public DoitProject createProject(DoitUser user, String projectName) throws DoitException{
         DoitUser actualUser = authorizeNoThrow(user.getLogin(), user.getPassword());

@@ -18,12 +18,14 @@ import java.util.Map;
  * Created by Almaz on 23.08.2015.
  */
 public class DoitTaskDAOImpl implements DoitTaskDAO {
+    public static final String DEFAULT_DATE_PATTERN = "YYYY-MM-DD HH:mm:ss";
     private DataSource dataSource;
     private SimpleDateFormat dateFormat;
+    private NamedParameterJdbcTemplate template;
 
     public DoitTaskDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+        this.dateFormat = new SimpleDateFormat(DEFAULT_DATE_PATTERN);
     }
 
     public DoitTaskDAOImpl(DataSource dataSource, SimpleDateFormat dateFormat) {
@@ -48,10 +50,10 @@ public class DoitTaskDAOImpl implements DoitTaskDAO {
                 "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
-            NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
+            template = new NamedParameterJdbcTemplate(dataSource);
             Map<String, String> namedParameters = new HashMap<>();
             namedParameters.put("PROJECT_ID", "1");
-            namedParameters.put("USER_ID", "1");
+            namedParameters.put("USER_ID", user.getUserId().toString());
             namedParameters.put("NAME", task.getName());
             namedParameters.put("DESCRIPTION", task.getDescription());
             namedParameters.put("PRIORITY", task.getPriority().name());
@@ -76,36 +78,36 @@ public class DoitTaskDAOImpl implements DoitTaskDAO {
 
     @Override
     public DoitTask findByName(String name) throws DoitDatabaseException {
-        return null;
+        throw new UnsupportedOperationException("Operation not supported yet");
     }
 
     @Override
     public List<DoitTask> findByUser(DoitUser user) throws DoitDatabaseException {
-        return null;
+        throw new UnsupportedOperationException("Operation not supported yet");
     }
 
     @Override
     public DoitTask delete(DoitTask task) {
-        return null;
+        throw new UnsupportedOperationException("Operation not supported yet");
     }
 
     @Override
     public DoitTask updateStatus(DoitTask task, DoitTaskStatus status) {
-        return null;
+        throw new UnsupportedOperationException("Operation not supported yet");
     }
 
     @Override
     public DoitTask updatePriority(DoitTask task, DoitTaskPriority priority) {
-        return null;
+        throw new UnsupportedOperationException("Operation not supported yet");
     }
 
     @Override
     public DoitTask updateTask(DoitTask task, String columnName, String newValue) {
-        return null;
+        throw new UnsupportedOperationException("Operation not supported yet");
     }
 
     @Override
     public DoitTask update(DoitTask oldTask, DoitTask newTask) {
-        return null;
+        throw new UnsupportedOperationException("Operation not supported yet");
     }
 }

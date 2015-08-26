@@ -5,32 +5,24 @@
  */
 package doit.core.entites;
 
-// REVIEW DATE: 12.08.2015
-// REVIEWER: ALMAZ
-
-
 import java.io.File;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Используется для хранения и работы с прикреплением типа File
  * @author Anatoly
  */
 @XmlRootElement(name = "attachment")
 @XmlType(propOrder = {"name", "file"})
 public class DoitAttachment extends File{
-    /**
-     * Ссылка на файл
-     */
     private File file;
-    /** Имя */
     private String name;
 
     /**
-     * Инициализирует поля {@link DoitAttachment} и {@link DoitAttachment#file}
-     * @param name Имя прикрепления
-     * @param file Ссылка на файл-прикрепление
+     *
+     * Initializing field  {@link DoitAttachment} и {@link DoitAttachment#file}
+     * @param name Short attachment name
+     * @param file path to attached file
      * @see DoitAttachment
      */
     public DoitAttachment(String name, File file) {

@@ -1,35 +1,29 @@
 package doit.core.entites;
 
 import java.util.Date;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-// REVIEW DATE: 11.08.2015
-// REVIEWER: ALMAZ
-
+import javax.xml.bind.annotation.*;
 
 /**
- * Класс для хранения и работы с задачей
  * @author Anatoly
  */
 @XmlRootElement(name = "task")
-@XmlType(name = "", propOrder = {"name", "description", "startDate", "finishDate", "attachmentList"})
+@XmlType(name = "task")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DoitTask extends DoitAbstractTask {
-    /** Степень важности задачи */
+    /** Task priority */
     @XmlAttribute(name = "priority")
     private DoitTaskPriority priority;
-    /** Статус завершения задачи */
+    /** Task status*/
     @XmlAttribute(name = "status")
     private DoitTaskStatus status;
 
     /***
-     * Инициализация полей {@link DoitTask#name}, {@link DoitTask#startDate},
+     * Initializing field {@link DoitTask#name}, {@link DoitTask#startDate},
      *              {@link DoitAttachment}  {@link DoitTaskPriority} {@link DoitTaskStatus}
      *
-     * @param name Имя
-     * @param start Дата начала
-     * @param attachment Прикрепление
+     * @param name Short task name
+     * @param start Start task date
+     * @param attachment Attachment
      * @param priority Task priority
      * @param status Current task status
      */
@@ -42,10 +36,10 @@ public class DoitTask extends DoitAbstractTask {
         this.status = status;
     }
     /**
-     * Инициализация полей {@link DoitTask#name}, {@link DoitTask#startDate}, {@link DoitAttachment}
-     * @param name Имя
-     * @param start Дата начала
-     * @param attachment Прикрепление
+     * Initializing field {@link DoitTask#name}, {@link DoitTask#startDate}, {@link DoitAttachment}
+     * @param name Short task name
+     * @param start Start task date
+     * @param attachment Attachment
      */
     public DoitTask(String name, Date start, DoitAttachment attachment) {
         this.name = name;
@@ -53,17 +47,17 @@ public class DoitTask extends DoitAbstractTask {
         this.attachmentList.add(attachment);
     }
     /**
-     * Инициализация полей {@link DoitTask#name}, {@link DoitTask#startDate}
-     * @param name Имя
-     * @param start Дата начала
+     * Initializing field  {@link DoitTask#name}, {@link DoitTask#startDate}
+     * @param name Short task name
+     * @param start Start task date
      */
     public DoitTask(String name, Date start) {
         this.name = name;
         this.startDate = start;
     }
     /**
-     * Инициализация полей {@link DoitTask#name}
-     * @param name Имя
+     * Initializing field {@link DoitTask#name}
+     * @param name Short task name
      */
     public DoitTask(String name) {
         this.name = name;
@@ -73,21 +67,31 @@ public class DoitTask extends DoitAbstractTask {
     }
 
     /**
-     * Изменение степени важности задачи
+     * Change priority for task
      * @param  priority
      */
     public void setPriority(DoitTaskPriority priority) {
         this.priority = priority;
     }
 
+    /***
+     * @return current task priority
+     */
     public DoitTaskPriority getPriority() {
         return priority;
     }
 
+    /***
+     * @return current task status
+     */
     public DoitTaskStatus getStatus() {
         return status;
     }
 
+    /***
+     * Change status for the task
+     * @param status new status
+     */
     public void setStatus(DoitTaskStatus status) {
         this.status = status;
     }

@@ -16,12 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
-// REVIEW DATE: 12.08.2015
-// REVIEWER: ALMAZ
-
-
 /**
- * Абстрактный класс, описывающий общие поля и методы, для работы с задачами
  * @author Anatoly
  */
 @XmlRootElement
@@ -29,13 +24,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlSeeAlso({DoitTask.class, DoitProject.class})
 @XmlType(propOrder = {"name", "description", "startDate", "finishDate", "attachmentList"})
 public abstract class DoitAbstractTask {
-    /** Имя */
     protected String name;
-    /** Описание */
     protected String description;
-    /** Дата начала */
     protected Date startDate;
-    /** Дата завершения */
     protected Date finishDate;
 
     protected List<DoitAttachment> attachmentList;
@@ -59,72 +50,37 @@ public abstract class DoitAbstractTask {
         attachmentList = attachments;
     }
 
-    protected DoitAbstractTask() {
+    public DoitAbstractTask() {
         this.attachmentList = new ArrayList<DoitAttachment>();
     }
 
     
-    /**
-     * Изменение имени
-     * @param name Новое имя
-     * 
-     * TODO: а если я null передам, то что будет?
-     */
     @XmlElement
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Получение имени
-     * @return Имя
-     */
     public String getName() {
         return this.name;
     }
 
-    /**
-     * Возвращает описание
-     * @return Описание
-     */
     public String getDescription() {
         return this.description;
     }
 
-    /**
-     * Позволяет именить описание ({@link DoitAbstractTask#description})
-     * @param descr Новое описание
-     * 
-     * TODO: а если я null передам, то что будет?
-     */
     @XmlElement
-    public void setDescription(String descr) {
-        this.description = descr;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    /**
-     * Возвращает объект Date - дата начала
-     * @return Дата начала
-     */
     public Date getStartDate() {
         return this.startDate;
     }
 
-    /**
-     * Возвращает объект Date - дата завершения
-     * @return Дата завершения
-     */
     public Date getFinishDate() {
         return this.finishDate;
     }
 
-
-    /**
-     * Позволяет изменить дату завершения
-     * @param finish Дата завершения
-     *
-     * TODO: а если я null передам, то что будет?
-     */
     @XmlElement
     public void setFinishDate(Date finish) {
         this.finishDate = finish;
